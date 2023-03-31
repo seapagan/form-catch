@@ -12,3 +12,4 @@ class Site(ormar.Model):
     id: int = ormar.Integer(primary_key=True)
     name: str = ormar.String(max_length=100)
     slug: str = ormar.String(max_length=20)
+    email: str = ormar.String(max_length=100)
