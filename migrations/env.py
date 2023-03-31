@@ -1,29 +1,28 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
 from alembic import context
+from decouple import config as cfg
+from sqlalchemy import engine_from_config, pool
+
+from form_catch.database.db import metadata
+from form_catch.models import site
+
+DATABASE_URL = (
+    f"postgresql://{cfg('DB_USER')}:{cfg('DB_PASSWORD')}@"
+    f"{cfg('DB_ADDRESS')}:{cfg('DB_PORT')}/{cfg('DB_NAME')}"
+)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
+target_metadata = metadata
+config.set_main_option("sqlalchemy.url", DATABASE_URL)
+
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
-
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
-target_metadata = None
-
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
 
 
 def run_migrations_offline() -> None:
