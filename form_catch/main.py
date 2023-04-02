@@ -5,7 +5,7 @@ from form_catch.database.db import database
 from form_catch.resources import routes
 
 app = FastAPI(
-    title="Form data catcher",
+    title="Form Catcher",
     description="This is a simple API to catch form data",
     version="0.1.0",
 )

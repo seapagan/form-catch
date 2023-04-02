@@ -5,9 +5,10 @@ imported by main.
 """
 from fastapi import APIRouter
 
-from form_catch.resources import form, home
+from form_catch.resources import form, home, site
 
 router = APIRouter()
 
 router.include_router(home.router)
 router.include_router(form.router)
+router.include_router(site.router)
