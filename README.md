@@ -9,6 +9,9 @@ form fields, the user does not need to set them in advance.
 This is currently just a skeleton. While it does accept and decode form
 submissions, it does not send emails.
 
+There is also (currently) no User Authentication or Authorization so sites can
+be added or deleted by anyone, this will be fixed shortly.
+
 - [Setup](#setup)
   - [Configuration](#configuration)
   - [Set up a Virtual Environment](#set-up-a-virtual-environment)
