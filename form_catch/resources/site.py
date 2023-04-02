@@ -17,3 +17,28 @@ async def create_site(site_data: RequestSite):  # type: ignore
         slug = create_slug()
 
     return await Site(**site_data.dict(), slug=slug).save()
+
+
+@router.get("/{slug}", response_model=Site)
+async def get_site(slug: str):  # type: ignore
+    """Get a site by its slug."""
+    site = await get_site_by_slug(slug)
+    if not site:
+        return {"detail": "Site not found."}
+    return site
+
+
+@router.get("/", response_model=list[Site])
+async def get_sites():  # type: ignore
+    """Get all sites."""
+    return await Site.objects.all()
+
+
+@router.delete("/{slug}")
+async def delete_site(slug: str):  # type: ignore
+    """Delete a site by its slug."""
+    site = await get_site_by_slug(slug)
+    if not site:
+        return {"detail": "Site not found."}
+    await site.delete()
+    return {"detail": "Site deleted."}
