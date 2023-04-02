@@ -1,6 +1,8 @@
 """Routes for handling form data."""
 from fastapi import APIRouter, Request
 
+from form_catch.helpers.slug import get_site_by_slug
+
 router = APIRouter(prefix="/form", tags=["Form Handling"])
 
 
@@ -14,6 +16,9 @@ async def respond_to_form(slug: str, request: Request):
 
     Also, this route responds to both GET and POST requests.
     """
+    site = await get_site_by_slug(slug)
+    if not site:
+        return {"detail": "Site not found."}
     form_data = await request.form()
     return {
         "message": f"Get form data by slug: {slug}",
