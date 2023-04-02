@@ -1,3 +1,4 @@
+"""Set up the database connection."""
 import databases
 import sqlalchemy
 

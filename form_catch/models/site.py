@@ -1,9 +1,12 @@
+"""Setup the Site model."""
 import ormar
 
 from form_catch.database.db import database, metadata
 
 
 class Site(ormar.Model):
+    """Site model definition."""
+
     class Meta:
         tablename = "sites"
         metadata = metadata
