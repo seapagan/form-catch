@@ -9,6 +9,21 @@ form fields, the user does not need to set them in advance.
 This is currently just a skeleton. While it does accept and decode form
 submissions, it does not send emails.
 
+- [Setup](#setup)
+  - [Configuration](#configuration)
+  - [Set up a Virtual Environment](#set-up-a-virtual-environment)
+  - [Install required Dependencies](#install-required-dependencies)
+  - [Migrate the Database](#migrate-the-database)
+- [Run the API](#run-the-api)
+- [API Routes](#api-routes)
+  - [**`GET`** _/_](#get-)
+  - [**`GET`** _/form/{slug}_](#get-formslug)
+  - [**`POST`** _/form/{slug}_](#post-formslug)
+  - [**`GET`** _/site/_](#get-site)
+  - [**`POST`** _/site/_](#post-site)
+  - [**`GET`** _/site/{slug}_](#get-siteslug)
+  - [**`DELETE`** _/site/{slug}_](#delete-siteslug)
+
 ## Setup
 
 ### Configuration
@@ -91,3 +106,46 @@ more information on how to use (for example how to revert migrations).
 ```terminal
 uvicorn form_catch.main:app --reload
 ```
+
+## API Routes
+
+<!-- openapi-schema -->
+
+### **`GET`** _/_
+
+> Root : _Root endpoint to check if the API is running successfully._
+
+### **`GET`** _/form/{slug}_
+
+> Respond To Form : _Get the supplied form data and email it._
+>
+> Note that the slug is used to determine the email address to send the form
+> data to.
+>
+> Also, this route responds to both GET and POST requests.
+>
+### **`POST`** _/form/{slug}_
+
+> Respond To Form : _Get the supplied form data and email it._
+>
+> Note that the slug is used to determine the email address to send the form
+> data to.
+>
+> Also, this route responds to both GET and POST requests.
+
+### **`GET`** _/site/_
+
+> Get Sites : _Get all sites._
+>
+### **`POST`** _/site/_
+
+> Create Site : _Create a new site._
+
+### **`GET`** _/site/{slug}_
+
+> Get Site : _Get a site by its slug._
+>
+### **`DELETE`** _/site/{slug}_
+
+> Delete Site : _Delete a site by its slug._
+<!-- openapi-schema-end -->
