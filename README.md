@@ -85,5 +85,5 @@ more information on how to use (for example how to revert migrations).
 ## Run the API
 
 ```terminal
-uvicorn main:app --reload
+uvicorn form_catch.main:app --reload
 ```
