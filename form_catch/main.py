@@ -1,5 +1,5 @@
 """Form data catcher API main module."""
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 from form_catch.database.db import database
 
@@ -15,6 +15,22 @@ app.state.database = database
 async def root():
     """Root endpoint to check if the API is running successfully."""
     return {"message": "API running successfully"}
+
+
+@app.get("/{slug}")
+@app.post("/{slug}")
+async def respond_to_form(slug: str, request: Request):
+    """Get the supplied form data and email it.
+
+    Note that the slug is used to determine the email address to send the form
+    data to.
+
+    Also, this route responds to both GET and POST requests.
+    """
+    return {
+        "message": f"Get form data by slug: {slug}",
+        "form_data": await request.form(),
+    }
 
 
 # ------ Init and close the database connection on startup and shutdown. ----- #
