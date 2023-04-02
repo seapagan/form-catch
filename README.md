@@ -1,9 +1,13 @@
-# Form_catch <!-- omit in toc -->
+# Form Catcher <!-- omit in toc -->
 
 A simple API to collect form submissions and send the contents to a specific
-Email address.
+Email address. Users can define a site with an email address and receive a
+unique slug in return. This slug will be used in the client Form `action` to get
+the correct email address to send the Form data. The API will take arbitrary
+form fields, the user does not need to set them in advance.
 
-This is currently just a skeleton and has no useful functionality
+This is currently just a skeleton. While it does accept and decode form
+submissions, it does not send emails.
 
 ## Setup
 
