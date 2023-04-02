@@ -1,7 +1,8 @@
 """Form data catcher API main module."""
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 
 from form_catch.database.db import database
+from form_catch.resources import routes
 
 app = FastAPI(
     title="Form data catcher",
@@ -10,27 +11,7 @@ app = FastAPI(
 )
 app.state.database = database
 
-
-@app.get("/")
-async def root():
-    """Root endpoint to check if the API is running successfully."""
-    return {"message": "API running successfully"}
-
-
-@app.get("/{slug}")
-@app.post("/{slug}")
-async def respond_to_form(slug: str, request: Request):
-    """Get the supplied form data and email it.
-
-    Note that the slug is used to determine the email address to send the form
-    data to.
-
-    Also, this route responds to both GET and POST requests.
-    """
-    return {
-        "message": f"Get form data by slug: {slug}",
-        "form_data": await request.form(),
-    }
+app.include_router(routes.router)
 
 
 # ------ Init and close the database connection on startup and shutdown. ----- #
