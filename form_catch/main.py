@@ -1,6 +1,11 @@
 """Form data catcher API main module."""
-from fastapi import FastAPI
+from pathlib import Path
 
+from fastapi import FastAPI
+from fastapi_mail import ConnectionConfig
+from pydantic import EmailStr
+
+from form_catch.config.settings import get_settings
 from form_catch.database.db import database
 from form_catch.resources import routes
 
@@ -10,6 +15,24 @@ app = FastAPI(
     version="0.1.0",
 )
 app.state.database = database
+
+
+# set up email connection
+email_connection = ConnectionConfig(
+    MAIL_USERNAME=get_settings().mail_username,
+    MAIL_PASSWORD=get_settings().mail_password,
+    MAIL_FROM=EmailStr(get_settings().mail_from),
+    MAIL_PORT=get_settings().mail_port,
+    MAIL_SERVER=get_settings().mail_server,
+    MAIL_FROM_NAME=get_settings().mail_from_name,
+    MAIL_STARTTLS=get_settings().mail_starttls,
+    MAIL_SSL_TLS=get_settings().mail_ssl_tls,
+    USE_CREDENTIALS=get_settings().mail_use_credentials,
+    VALIDATE_CERTS=get_settings().mail_validate_certs,
+    TEMPLATE_FOLDER=Path(__file__).parent / "templates",
+)
+app.state.email_connection = email_connection
+
 
 app.include_router(routes.router)
 
