@@ -23,6 +23,18 @@ class Settings(BaseSettings):
     db_port = "5432"
     db_name = "api-template"
 
+    # email settings
+    mail_username = "test_username"
+    mail_password = "s3cr3tma1lp@ssw0rd"
+    mail_from = "test@email.com"
+    mail_port = 587
+    mail_server = "mail.server.com"
+    mail_from_name = "FASTAPI Template"
+    mail_starttls = True
+    mail_ssl_tls = False
+    mail_use_credentials = True
+    mail_validate_certs = True
+
     class Config:
         """Override the default variables from an .env file, if it exsits."""
 

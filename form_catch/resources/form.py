@@ -1,5 +1,7 @@
 """Routes for handling form data."""
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
+from fastapi_mail import FastMail, MessageSchema, MessageType
+from pydantic import EmailStr
 
 from form_catch.helpers.slug import get_site_by_slug
 
@@ -8,7 +10,9 @@ router = APIRouter(prefix="/form", tags=["Form Handling"])
 
 @router.get("/{slug}")
 @router.post("/{slug}")
-async def respond_to_form(slug: str, request: Request):
+async def respond_to_form(
+    slug: str, request: Request, backgroundtasks: BackgroundTasks
+):
     """Get the supplied form data and email it.
 
     Note that the slug is used to determine the email address to send the form
@@ -18,8 +22,20 @@ async def respond_to_form(slug: str, request: Request):
     """
     site = await get_site_by_slug(slug)
     if not site:
-        return {"detail": "Site not found."}
+        raise HTTPException(status_code=404, detail="Site not found.")
     form_data = await request.form()
+
+    message = MessageSchema(
+        subject=f"Form submission for site '{site.name}'",
+        recipients=[EmailStr(site.email)],
+        template_body={"name": site.name, "form_data": dict(form_data)},
+        subtype=MessageType.html,
+    )
+    fm = FastMail(request.app.state.email_connection)
+    backgroundtasks.add_task(
+        fm.send_message, message, template_name="submission.html"
+    )
+
     return {
         "message": f"Get form data by slug: {slug}",
         "form_data": form_data,
