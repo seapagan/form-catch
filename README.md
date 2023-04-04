@@ -33,7 +33,7 @@ be added or deleted by anyone, this will be fixed shortly.
 
 Database (and other) settings can be read from environment variables or from a
 `.env` file in the project root. By default, these are only used for the
-Database setup.
+Database and Email setup.
 
 ```ini
 # The Base API Url. This is where your API wil be served from, and can be read
@@ -42,12 +42,20 @@ Database setup.
 # http://localhost:8000
 BASE_URL=http://localhost:8000
 
-# Database Settings These must be changed to match your setup.
+# Database Settings - These must be changed to match your setup.
 DB_USER=dbuser
 DB_PASSWORD=my_secret_passw0rd
 DB_ADDRESS=localhost
 DB_PORT=5432
 DB_NAME=my_database_name
+
+# Email Settings
+MAIL_USERNAME=emailuser
+MAIL_PASSWORD=12345!
+MAIL_FROM=myemail@gmail.com
+MAIL_PORT=587
+MAIL_SERVER=smtp.mailserver.com
+MAIL_FROM_NAME="Form Catcher by Seapagan"
 ```
 
 ### Set up a Virtual Environment
