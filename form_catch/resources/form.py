@@ -1,5 +1,5 @@
 """Routes for handling form data."""
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Request, status
 from fastapi_mail import FastMail, MessageSchema, MessageType
 from pydantic import EmailStr
 
@@ -22,7 +22,9 @@ async def respond_to_form(
     """
     site = await get_site_by_slug(slug)
     if not site:
-        raise HTTPException(status_code=404, detail="Site not found.")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Site not found."
+        )
     form_data = await request.form()
 
     message = MessageSchema(

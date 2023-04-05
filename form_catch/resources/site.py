@@ -1,5 +1,5 @@
 """Handle site related routes."""
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, status
 
 from form_catch.helpers.slug import create_slug, get_site_by_slug
 from form_catch.models.site import Site
@@ -24,7 +24,9 @@ async def get_site(slug: str):  # type: ignore
     """Get a site by its slug."""
     site = await get_site_by_slug(slug)
     if not site:
-        return {"detail": "Site not found."}
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Site not found"
+        )
     return site
 
 
@@ -34,11 +36,12 @@ async def get_sites():  # type: ignore
     return await Site.objects.all()
 
 
-@router.delete("/{slug}")
+@router.delete("/{slug}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_site(slug: str):  # type: ignore
     """Delete a site by its slug."""
     site = await get_site_by_slug(slug)
     if not site:
-        return {"detail": "Site not found."}
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Site not found"
+        )
     await site.delete()
-    return {"detail": "Site deleted."}
