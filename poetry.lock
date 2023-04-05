@@ -552,6 +552,26 @@ redis = ["redis (>=4.3.3,<5.0.0)"]
 sqlalchemy = ["fastapi-users-db-sqlalchemy (>=4.0.0)"]
 
 [[package]]
+name = "fastapi-users-db-ormar"
+version = "1.0.0"
+description = "FastAPI Users database adapter for ormar."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = []
+develop = false
+
+[package.dependencies]
+fastapi-users = ">=6.1.2"
+ormar = ">=0.10.16,<0.13.0"
+
+[package.source]
+type = "git"
+url = "https://github.com/seapagan/fastapi-users-db-ormar"
+reference = "update_deps"
+resolved_reference = "83e615f40c4a0044fe8e1135f4ab12ec6e858940"
+
+[[package]]
 name = "fastapi-users-db-sqlalchemy"
 version = "4.0.5"
 description = "FastAPI Users database adapter for SQLAlchemy"
@@ -1974,4 +1994,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "08c5ad5ffc4a142189c5d91e65b7987bfbb3899f02780ceacc269c826614c7c9"
+content-hash = "23f682da0573b35e07c9c3d0e93d73fc6a07d9143da4bf66be07e6ccc68ce413"
