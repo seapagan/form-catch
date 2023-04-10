@@ -1,5 +1,6 @@
 """Routes for handling form data."""
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Request, status
+from fastapi.responses import RedirectResponse
 from fastapi_mail import FastMail, MessageSchema, MessageType
 from pydantic import EmailStr
 
@@ -44,9 +45,12 @@ async def respond_to_form(
         subtype=MessageType.html,
     )
     fm = FastMail(request.app.state.email_connection)
-    backgroundtasks.add_task(
-        fm.send_message, message, template_name="submission.html"
-    )
+    # redirect to the site's redirect URL if it is specified
+    if site.redirect_url:
+        print("redirecting to", site.redirect_url)
+        return RedirectResponse(
+            url=site.redirect_url, status_code=status.HTTP_303_SEE_OTHER
+        )
 
     # return {
     #     "message": f"Get form data by slug: {slug}",
