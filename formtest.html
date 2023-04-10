@@ -9,13 +9,26 @@
   </head>
 
   <body>
-    <form method="POST" action="http://localhost:8000/form/B1kHu9ig">
-      <label for="name">Name</label>
-      <input type="text" name="name" id="name" />
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email" />
-      <button type="submit">Submit</button>
-    </form>
+    <fieldset>
+      <legend>Using GET method</legend>
+      <form method="GET" action="http://localhost:8000/form/B1kHu9ig">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" />
+        <button type="submit">Submit</button>
+      </form>
+    </fieldset>
+    <fieldset>
+      <legend>Using POST method</legend>
+      <form method="POST" action="http://localhost:8000/form/B1kHu9ig">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" />
+        <button type="submit">Submit</button>
+      </form>
+    </fieldset>
   </body>
 
 </html>
