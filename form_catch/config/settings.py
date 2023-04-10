@@ -35,6 +35,9 @@ class Settings(BaseSettings):
     mail_use_credentials = True
     mail_validate_certs = True
 
+    # lockdown mode
+    lockdown = False
+
     class Config:
         """Override the default variables from an .env file, if it exsits."""
 
