@@ -7,3 +7,4 @@
 - implement `read-only` mode where sites cannot be added/edited/deleted, only
   allow to catch data for existing sites. This would be helpful to lockdown a
   single-site service after setting up your site.
+- add test for empty form data, don't send email if so.
