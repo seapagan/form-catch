@@ -18,3 +18,6 @@ class Site(ormar.Model):
     name: str = ormar.String(max_length=100)  # type: ignore
     slug: str = ormar.String(max_length=20, unique=True)  # type: ignore
     email: str = ormar.String(max_length=100)  # type: ignore
+    redirect_url: str = ormar.String(
+        max_length=100, nullable=True, default=None
+    )  # type: ignore

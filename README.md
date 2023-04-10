@@ -6,11 +6,10 @@ unique slug in return. This slug will be used in the client Form `action` to get
 the correct email address to send the Form data. The API will take arbitrary
 form fields, the user does not need to set them in advance.
 
-This is currently just a skeleton. While it does accept and decode form
-submissions, it does not send emails.
-
-There is also (currently) no User Authentication or Authorization so sites can
-be added or deleted by anyone, this will be fixed shortly.
+This is currently just a Work in progress and not properly secured. It does
+accept and decode form submissions and send this data to the specified site
+email, but there is no Authentication/Authorization so should not be used as a
+production tool just yet (**anyone** can add/edit/delete sites!).
 
 - [Setup](#setup)
   - [Configuration](#configuration)
