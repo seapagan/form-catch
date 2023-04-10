@@ -2,11 +2,21 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
 from fastapi_mail import FastMail, MessageSchema, MessageType
+from fastapi_mail.errors import ConnectionErrors
 from pydantic import EmailStr
 
 from form_catch.helpers.slug import get_site_by_slug
 
 router = APIRouter(prefix="/form", tags=["Form Handling"])
+
+
+async def send_mail_task(fm: FastMail, message: MessageSchema):
+    """Send the email in the background."""
+    try:
+        await fm.send_message(message, template_name="submission.html")
+    except ConnectionErrors as e:
+        # later we will actually log this error
+        print("Error sending email:", str(e))
 
 
 @router.get("/{slug}", status_code=status.HTTP_204_NO_CONTENT)
@@ -26,8 +36,9 @@ async def respond_to_form(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Site not found."
         )
-    method = request.method
 
+    # Get the form data depending on the request method
+    method = request.method
     if method == "GET":
         form_data = request.query_params
     elif method == "POST":
@@ -38,6 +49,7 @@ async def respond_to_form(
             detail="Only GET and POST requests are allowed.",
         )
 
+    # Send the email
     message = MessageSchema(
         subject=f"Form submission for site '{site.name}'",
         recipients=[EmailStr(site.email)],
@@ -45,14 +57,11 @@ async def respond_to_form(
         subtype=MessageType.html,
     )
     fm = FastMail(request.app.state.email_connection)
+    backgroundtasks.add_task(send_mail_task, fm, message)
+
     # redirect to the site's redirect URL if it is specified
     if site.redirect_url:
         print("redirecting to", site.redirect_url)
         return RedirectResponse(
             url=site.redirect_url, status_code=status.HTTP_303_SEE_OTHER
         )
-
-    # return {
-    #     "message": f"Get form data by slug: {slug}",
-    #     "form_data": form_data,
-    # }
