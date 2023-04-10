@@ -13,6 +13,7 @@ production tool just yet (**anyone** can add/edit/delete sites!).
 
 - [Setup](#setup)
   - [Configuration](#configuration)
+    - [Lockdown Mode](#lockdown-mode)
   - [Set up a Virtual Environment](#set-up-a-virtual-environment)
   - [Install required Dependencies](#install-required-dependencies)
   - [Migrate the Database](#migrate-the-database)
@@ -55,7 +56,33 @@ MAIL_FROM=myemail@gmail.com
 MAIL_PORT=587
 MAIL_SERVER=smtp.mailserver.com
 MAIL_FROM_NAME="Form Catcher by Seapagan"
+
+# Lockdown the API - This will prevent any new sites from being created, or
+# existing sites edited/deleted. This is useful if you want to prevent
+# accidental changes to the API. Defaults to False
+LOCKDOWN=False
 ```
+
+#### Lockdown Mode
+
+Once you have set up your site(s) it can be advantageous to block anyone else
+from creating or editing (or more importantly) deleting the site(s).
+
+For this there is the `LOCKDOWN` environment variable. Set this in the  `.env`
+file as above.
+
+```ini
+LOCKDOWN=False # default, API is open
+```
+
+or
+
+```ini
+LOCKDOWN=True # all routes under '/site' are removed and blocked.
+```
+
+Unless you are operating a public service where people can add their own sites,
+it is recommended to set `LOCKDOWN=True` for any public-facing catcher.
 
 ### Set up a Virtual Environment
 
