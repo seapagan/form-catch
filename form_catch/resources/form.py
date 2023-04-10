@@ -8,8 +8,8 @@ from form_catch.helpers.slug import get_site_by_slug
 router = APIRouter(prefix="/form", tags=["Form Handling"])
 
 
-@router.get("/{slug}")
-@router.post("/{slug}")
+@router.get("/{slug}", status_code=status.HTTP_204_NO_CONTENT)
+@router.post("/{slug}", status_code=status.HTTP_204_NO_CONTENT)
 async def respond_to_form(
     slug: str, request: Request, backgroundtasks: BackgroundTasks
 ):
@@ -48,7 +48,7 @@ async def respond_to_form(
         fm.send_message, message, template_name="submission.html"
     )
 
-    return {
-        "message": f"Get form data by slug: {slug}",
-        "form_data": form_data,
-    }
+    # return {
+    #     "message": f"Get form data by slug: {slug}",
+    #     "form_data": form_data,
+    # }
