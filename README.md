@@ -55,6 +55,11 @@ MAIL_FROM=myemail@gmail.com
 MAIL_PORT=587
 MAIL_SERVER=smtp.mailserver.com
 MAIL_FROM_NAME="Form Catcher by Seapagan"
+
+# Lockdown the API - This will prevent any new sites from being created, or
+# existing sites edited/deleted. This is useful if you want to prevent
+# accidental changes to the API. Defaults to False
+LOCKDOWN=False
 ```
 
 ### Set up a Virtual Environment
