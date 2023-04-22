@@ -172,7 +172,7 @@ form data should be sent to and '_redirect_url_' is the URL to redirect to after
 the form is submitted.
 
 On submitting this, you will recieve a 'slug' parameter back, which should be
-used in your HTML forms. You will also recive an 'action' parameter whioch
+used in your HTML forms. You will also recive an 'action' parameter which
 includes the full URL needed for your form.
 
 ```json
@@ -188,8 +188,8 @@ includes the full URL needed for your form.
 Once you have the site created, you can use this in your HTML forms as the
 'action' in the format `<URL>/form/slug`. In fact, just copy the 'action' field
 from the response above into the `action` parameter of the form. All form fields
-are entirely up to you, the API will return all the fields specified with no
-further configuration needed:
+are fluid and entirely up to you, the API will return all the fields sent to it
+with no further configuration needed:
 
 ```html
 <form method="GET" action="https://www.myformresponder.com/form/rNPf97Tg">
@@ -213,10 +213,14 @@ the site.
 
 ## Demo site
 
-There is an example demo site in the [html_example](/html_example/) folder.
-This shows both GET and POST methods.
-To use this you will need a locally running server, with at least one site set
-up - change the `action=` parameter to match your own site.
+There is an example demo site in the [html_example](/html_example/) folder, load
+the [formtest.html](/html_example/formtest.html) in a web browser to use it.
+
+This tests both `GET` and `POST` form methods.
+
+To use this you will need a locally running server [see above](#run-the-api),
+with at least one site set up - change the `action=` parameter to match your own
+site.
 
 ## API Routes
 
