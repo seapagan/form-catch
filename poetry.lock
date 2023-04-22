@@ -1419,7 +1419,7 @@ greenlet = {version = "!=0.4.17", markers = "python_version >= \"3\" and (platfo
 
 [package.extras]
 aiomysql = ["aiomysql", "greenlet (!=0.4.17)"]
-aiosqlite = ["aiosqlite", "greenlet (!=0.4.17)", "typing-extensions (!=3.10.0.1)"]
+aiosqlite = ["aiosqlite", "greenlet (!=0.4.17)", "typing_extensions (!=3.10.0.1)"]
 asyncio = ["greenlet (!=0.4.17)"]
 asyncmy = ["asyncmy (>=0.2.3,!=0.2.4)", "greenlet (!=0.4.17)"]
 mariadb-connector = ["mariadb (>=1.0.1,!=1.1.2)"]
@@ -1429,14 +1429,14 @@ mssql-pyodbc = ["pyodbc"]
 mypy = ["mypy (>=0.910)", "sqlalchemy2-stubs"]
 mysql = ["mysqlclient (>=1.4.0)", "mysqlclient (>=1.4.0,<2)"]
 mysql-connector = ["mysql-connector-python"]
-oracle = ["cx-oracle (>=7)", "cx-oracle (>=7,<8)"]
+oracle = ["cx_oracle (>=7)", "cx_oracle (>=7,<8)"]
 postgresql = ["psycopg2 (>=2.7)"]
 postgresql-asyncpg = ["asyncpg", "greenlet (!=0.4.17)"]
 postgresql-pg8000 = ["pg8000 (>=1.16.6,!=1.29.0)"]
 postgresql-psycopg2binary = ["psycopg2-binary"]
 postgresql-psycopg2cffi = ["psycopg2cffi"]
 pymysql = ["pymysql", "pymysql (<1)"]
-sqlcipher = ["sqlcipher3-binary"]
+sqlcipher = ["sqlcipher3_binary"]
 
 [[package]]
 name = "starlette"
@@ -1804,4 +1804,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "3def90ebffb45f9ac0d3b7b8c3849916c499c5c7abcb2105b5c2455504c33604"
+content-hash = "4ed46e031d1cff31df92e0ada429746f87492c3d6c8d5a80209925b90ac473bb"
