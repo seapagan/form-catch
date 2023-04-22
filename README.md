@@ -21,6 +21,8 @@ production tool just yet (**anyone** can add/edit/delete sites!).
 - [Usage](#usage)
   - [Create a Site](#create-a-site)
   - [Create your Form](#create-your-form)
+  - [Check your Email](#check-your-email)
+- [Demo site](#demo-site)
 - [API Routes](#api-routes)
   - [**`GET`** _/_](#get-)
   - [**`GET`** _/form/echo_](#get-formecho)
@@ -41,7 +43,7 @@ Database (and other) settings can be read from environment variables or from a
 
 ```ini
 # The Base API Url. This is where your API wil be served from, and can be read
-# in the application code. It has no effect on the running of the applciation
+# in the application code. It has no effect on the running of the application
 # but is an easy way to build a path for API responses. Defaults to
 # http://localhost:8000
 BASE_URL=http://localhost:8000
@@ -159,9 +161,9 @@ Send a POST request to the `/site` URL with the following Body content:
 
 ```json
 {
-  "name": "string",
-  "email": "string",
-  "redirect_url": "string"
+  "name": "My Site",
+  "email": "my_email@google.com",
+  "redirect_url": "https://mysite.com/submitted.html"
 }
 ```
 
@@ -170,27 +172,51 @@ form data should be sent to and '_redirect_url_' is the URL to redirect to after
 the form is submitted.
 
 On submitting this, you will recieve a 'slug' parameter back, which should be
-used in your HTML forms.
+used in your HTML forms. You will also recive an 'action' parameter whioch
+includes the full URL needed for your form.
+
+```json
+{
+  "name": "My Site",
+  "slug": "rNPf97Tg",
+  "action": "https://www.myformresponder.com/form/rNPf97Tg"
+}
+```
 
 ### Create your Form
 
-Once you have the slug, this will be used in your HTML forms as the 'action in
-the format `<URL>/form/slug`
+Once you have the site created, you can use this in your HTML forms as the
+'action' in the format `<URL>/form/slug`. In fact, just copy the 'action' field
+from the response above into the `action` parameter of the form. All form fields
+are entirely up to you, the API will return all the fields specified with no
+further configuration needed:
 
 ```html
-<form method="GET" action="http://localhost:8000/form/B1kHu9ig">
-      <label for="first_name">First Name</label>
-      <input type="text" name="first_name" id="first_name" />
-      <label for="last_name">Last Name</label>
-      <input type="text" name="last_name" id="last_name" />
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email" />
-      <button type="submit">Submit</button>
-    </form>
+<form method="GET" action="https://www.myformresponder.com/form/rNPf97Tg">
+  <label for="first_name">First Name</label>
+  <input type="text" name="first_name" id="first_name" />
+  <label for="last_name">Last Name</label>
+  <input type="text" name="last_name" id="last_name" />
+  <label for="email">Email</label>
+  <input type="email" name="email" id="email" />
+  <button type="submit">Submit</button>
+</form>
 ```
 
 Note that the `method=` can be either `GET` or `POST` as you desire, both will be
 captured.
+
+### Check your Email
+
+All submissions will be sent to the email address you specified when creating
+the site.
+
+## Demo site
+
+There is an example demo site in the [html_example](/html_example/) folder.
+This shows both GET and POST methods.
+To use this you will need a locally running server, with at least one site set
+up - change the `action=` parameter to match your own site.
 
 ## API Routes
 
