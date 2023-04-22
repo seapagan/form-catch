@@ -22,6 +22,7 @@
 - [ ] integrate with Slack, Google Sheets, Discord, Whatsapp and more
 - [ ] add Webhooks
 - [ ] add full testing suite
+- [ ] add rate-limiting to the endpoints
 
 ## Once User Auth is implemented
 
