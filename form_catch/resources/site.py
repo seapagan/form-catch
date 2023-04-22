@@ -1,22 +1,31 @@
 """Handle site related routes."""
 from fastapi import APIRouter, HTTPException, status
 
+from form_catch.config.settings import get_settings
 from form_catch.helpers.slug import create_slug, get_site_by_slug
 from form_catch.models.site import Site
+from form_catch.schemas.site import SiteResponse
 
 router = APIRouter(prefix="/site", tags=["Site"])
 
 RequestSite = Site.get_pydantic(exclude={"id", "slug"})
 
 
-@router.post("/", response_model=Site)
+@router.post(
+    "/", response_model=SiteResponse, status_code=status.HTTP_201_CREATED
+)
 async def create_site(site_data: RequestSite):  # type: ignore
     """Create a new site."""
     slug = create_slug()
     while await get_site_by_slug(slug):
         slug = create_slug()
 
-    return await Site(**site_data.dict(), slug=slug).save()
+    response = await Site(**site_data.dict(), slug=slug).save()
+    return SiteResponse(
+        name=response.name,
+        slug=response.slug,
+        action=f"{get_settings().base_url}/form/{slug}",
+    )
 
 
 @router.get("/{slug}", response_model=Site)
