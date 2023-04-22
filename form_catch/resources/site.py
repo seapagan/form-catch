@@ -1,4 +1,5 @@
 """Handle site related routes."""
+from email_validator import EmailNotValidError, validate_email
 from fastapi import APIRouter, HTTPException, status
 
 from form_catch.config.settings import get_settings
@@ -19,6 +20,13 @@ async def create_site(site_data: RequestSite):  # type: ignore
     slug = create_slug()
     while await get_site_by_slug(slug):
         slug = create_slug()
+
+    try:
+        validate_email(site_data.email, check_deliverability=True)
+    except EmailNotValidError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
+        )
 
     response = await Site(**site_data.dict(), slug=slug).save()
     return SiteResponse(
