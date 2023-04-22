@@ -10,7 +10,7 @@
   allow to catch data for existing sites. This would be helpful to lockdown a
   single-site service after setting up your site. [`Implemented as
   'lockdown'`]
-- [ ] add test for empty form data, don't send email if so.
+- [x] add test for empty form data, don't send email if so.
 - [ ] version the API endpoints for future-proofing.
 - [x] add an 'echo' form_id that will simply echo the results back to you (for
   testing)
