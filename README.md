@@ -34,8 +34,7 @@ production tool just yet (**anyone** can add/edit/delete sites!).
 ### Configuration
 
 Database (and other) settings can be read from environment variables or from a
-`.env` file in the project root. By default, these are only used for the
-Database and Email setup.
+`.env` file in the `form_catch` subdirectory.
 
 ```ini
 # The Base API Url. This is where your API wil be served from, and can be read
