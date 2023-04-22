@@ -74,6 +74,13 @@ async def respond_to_form(
     # Get the form data depending on the request method
     form_data = await get_form_data(request)
 
+    # Check that the form data is not empty
+    if len([x for x in form_data.values() if x]) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No form data was supplied.",
+        )
+
     # Send the email
     message = MessageSchema(
         subject=f"Form submission for site '{site.name}'",
