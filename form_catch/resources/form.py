@@ -19,6 +19,47 @@ async def send_mail_task(fm: FastMail, message: MessageSchema):
         print("Error sending email:", str(e))
 
 
+async def get_form_data(request: Request):
+    """Get the form data from the request.
+
+    This function is used to get the form data from the request. It is used
+    in the echo_form route and the respond_to_form route.
+    """
+    method = request.method
+    if method == "GET":
+        form_data = request.query_params
+    elif method == "POST":
+        form_data = await request.form()
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+            detail="Only GET and POST requests are allowed.",
+        )
+    return form_data
+
+
+@router.get("/echo")
+@router.post("/echo")
+async def echo_form(request: Request):
+    """Echo the form data back to the user.
+
+    Note that this route responds to both GET and POST requests.
+    """
+    # method = request.method
+    # if method == "GET":
+    #     form_data = request.query_params
+    # elif method == "POST":
+    #     form_data = await request.form()
+    # else:
+    #     raise HTTPException(
+    #         status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+    #         detail="Only GET and POST requests are allowed.",
+    #     )
+    form_data = await get_form_data(request)
+
+    return dict(form_data)
+
+
 @router.get("/{slug}", status_code=status.HTTP_204_NO_CONTENT)
 @router.post("/{slug}", status_code=status.HTTP_204_NO_CONTENT)
 async def respond_to_form(
