@@ -20,6 +20,8 @@ production tool just yet (**anyone** can add/edit/delete sites!).
 - [Run the API](#run-the-api)
 - [API Routes](#api-routes)
   - [**`GET`** _/_](#get-)
+  - [**`GET`** _/form/echo_](#get-formecho)
+  - [**`POST`** _/form/echo_](#post-formecho)
   - [**`GET`** _/form/{slug}_](#get-formslug)
   - [**`POST`** _/form/{slug}_](#post-formslug)
   - [**`GET`** _/site/_](#get-site)
@@ -152,6 +154,23 @@ uvicorn form_catch.main:app --reload
 
 > Root : _Root endpoint to check if the API is running successfully._
 
+### **`GET`** _/form/echo_
+
+> Echo Form : _Echo the form data back to the user._
+>
+> This is useful during development to see what data is being sent to the
+> server.
+>
+> Note that this route responds to both GET and POST requests.
+### **`POST`** _/form/echo_
+
+> Echo Form : _Echo the form data back to the user._
+>
+> This is useful during development to see what data is being sent to the
+> server.
+>
+> Note that this route responds to both GET and POST requests.
+
 ### **`GET`** _/form/{slug}_
 
 > Respond To Form : _Get the supplied form data and email it._
@@ -160,7 +179,6 @@ uvicorn form_catch.main:app --reload
 > data to.
 >
 > Also, this route responds to both GET and POST requests.
->
 ### **`POST`** _/form/{slug}_
 
 > Respond To Form : _Get the supplied form data and email it._
@@ -173,7 +191,6 @@ uvicorn form_catch.main:app --reload
 ### **`GET`** _/site/_
 
 > Get Sites : _Get all sites._
->
 ### **`POST`** _/site/_
 
 > Create Site : _Create a new site._
@@ -181,8 +198,8 @@ uvicorn form_catch.main:app --reload
 ### **`GET`** _/site/{slug}_
 
 > Get Site : _Get a site by its slug._
->
 ### **`DELETE`** _/site/{slug}_
 
 > Delete Site : _Delete a site by its slug._
 <!-- openapi-schema-end -->
+

@@ -43,6 +43,9 @@ async def get_form_data(request: Request):
 async def echo_form(request: Request):
     """Echo the form data back to the user.
 
+    This is useful during development to see what data is being sent to the
+    server.
+
     Note that this route responds to both GET and POST requests.
     """
     form_data = await get_form_data(request)
