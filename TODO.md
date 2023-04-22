@@ -19,3 +19,4 @@
   the original site. Add our branding 😁 but allow minor customisation.
 - integrate with Slack, Google Sheets, Discord, Whatsapp and more
 - add Webhooks
+- add full testing suite
