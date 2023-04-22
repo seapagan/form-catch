@@ -45,16 +45,6 @@ async def echo_form(request: Request):
 
     Note that this route responds to both GET and POST requests.
     """
-    # method = request.method
-    # if method == "GET":
-    #     form_data = request.query_params
-    # elif method == "POST":
-    #     form_data = await request.form()
-    # else:
-    #     raise HTTPException(
-    #         status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
-    #         detail="Only GET and POST requests are allowed.",
-    #     )
     form_data = await get_form_data(request)
 
     return dict(form_data)
@@ -79,16 +69,7 @@ async def respond_to_form(
         )
 
     # Get the form data depending on the request method
-    method = request.method
-    if method == "GET":
-        form_data = request.query_params
-    elif method == "POST":
-        form_data = await request.form()
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
-            detail="Only GET and POST requests are allowed.",
-        )
+    form_data = await get_form_data(request)
 
     # Send the email
     message = MessageSchema(
