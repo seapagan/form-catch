@@ -3,7 +3,7 @@
 ## General planned improvements
 
 - [ ] add logging to file for any errors
-- [ ] check if the supplied email address is valid on site creation, fail if not
+- [x] check if the supplied email address is valid on site creation, fail if not
 - [ ] add User Authentication and Authorization, users should not be able to mess
   with or even list any other users sites. Add Admin users who can do all.
 - [x] implement `read-only` mode where sites cannot be added/edited/deleted, only
