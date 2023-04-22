@@ -18,6 +18,9 @@ production tool just yet (**anyone** can add/edit/delete sites!).
   - [Install required Dependencies](#install-required-dependencies)
   - [Migrate the Database](#migrate-the-database)
 - [Run the API](#run-the-api)
+- [Usage](#usage)
+  - [Create a Site](#create-a-site)
+  - [Create your Form](#create-your-form)
 - [API Routes](#api-routes)
   - [**`GET`** _/_](#get-)
   - [**`GET`** _/form/echo_](#get-formecho)
@@ -144,6 +147,50 @@ more information on how to use (for example how to revert migrations).
 ```terminal
 uvicorn form_catch.main:app --reload
 ```
+
+## Usage
+
+### Create a Site
+
+First you need to Create a Site. This just links a unique slug address to your
+email address, with some configuration options.
+
+Send a POST request to the `/site` URL with the following Body content:
+
+```json
+{
+  "name": "string",
+  "email": "string",
+  "redirect_url": "string"
+}
+```
+
+Where '_name_' is the friendly name for your site, '_email_' is the address that
+form data should be sent to and '_redirect_url_' is the URL to redirect to after
+the form is submitted.
+
+On submitting this, you will recieve a 'slug' parameter back, which should be
+used in your HTML forms.
+
+### Create your Form
+
+Once you have the slug, this will be used in your HTML forms as the 'action in
+the format `<URL>/form/slug`
+
+```html
+<form method="GET" action="http://localhost:8000/form/B1kHu9ig">
+      <label for="first_name">First Name</label>
+      <input type="text" name="first_name" id="first_name" />
+      <label for="last_name">Last Name</label>
+      <input type="text" name="last_name" id="last_name" />
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" />
+      <button type="submit">Submit</button>
+    </form>
+```
+
+Note that the `method=` can be either `GET` or `POST` as you desire, both will be
+captured.
 
 ## API Routes
 
