@@ -1,5 +1,7 @@
 # TODO
 
+## General planned improvements
+
 - [ ] add logging to file for any errors
 - [ ] check if the supplied email address is valid on site creation, fail if not
 - [ ] add User Authentication and Authorization, users should not be able to mess
@@ -20,3 +22,9 @@
 - [ ] integrate with Slack, Google Sheets, Discord, Whatsapp and more
 - [ ] add Webhooks
 - [ ] add full testing suite
+
+## Once User Auth is implemented
+
+- [ ] show user stats for their form endpoint
+- [ ] save the submitted data so it can be viewed online
+- [ ] option to export above saved data to CSV and others
