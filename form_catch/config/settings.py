@@ -41,7 +41,7 @@ class Settings(BaseSettings):
     class Config:
         """Override the default variables from an .env file, if it exsits."""
 
-        env_file = ".env"
+        env_file = "form_catch/.env"
 
 
 @lru_cache
