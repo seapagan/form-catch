@@ -162,6 +162,7 @@ uvicorn form_catch.main:app --reload
 > server.
 >
 > Note that this route responds to both GET and POST requests.
+>
 ### **`POST`** _/form/echo_
 
 > Echo Form : _Echo the form data back to the user._
@@ -179,6 +180,7 @@ uvicorn form_catch.main:app --reload
 > data to.
 >
 > Also, this route responds to both GET and POST requests.
+>
 ### **`POST`** _/form/{slug}_
 
 > Respond To Form : _Get the supplied form data and email it._
@@ -191,6 +193,7 @@ uvicorn form_catch.main:app --reload
 ### **`GET`** _/site/_
 
 > Get Sites : _Get all sites._
+>
 ### **`POST`** _/site/_
 
 > Create Site : _Create a new site._
@@ -198,8 +201,8 @@ uvicorn form_catch.main:app --reload
 ### **`GET`** _/site/{slug}_
 
 > Get Site : _Get a site by its slug._
+>
 ### **`DELETE`** _/site/{slug}_
 
 > Delete Site : _Delete a site by its slug._
 <!-- openapi-schema-end -->
-
