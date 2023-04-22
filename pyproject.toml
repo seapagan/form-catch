@@ -25,6 +25,7 @@ black = "^23.3.0"
 pylint = "^2.17.2"
 pep8-naming = "^0.13.3"
 openapi-readme = "^0.2.1"
+bandit = "^1.7.5"
 
 [build-system]
 requires = ["poetry-core"]
