@@ -137,7 +137,7 @@ Everytime you add or edit a model, create a new migration then run the upgrade
 as shown below:
 
 ```console
-alembic revision -m "<My commit message>"
+alembic revision --autogenerate -m "<My commit message>"
 alembic upgrade head
 ```
 
@@ -146,8 +146,19 @@ more information on how to use (for example how to revert migrations).
 
 ## Run the API
 
-Run `poe serve` or `poetry poe serve` (the latter works outside the Poetry
-shell)
+From your Poetry shell, run either
+
+```terminal
+poe serve
+```
+
+or
+
+```terminal
+poetry poe serve
+```
+
+(the latter also works outside the Poetry shell)
 
 This is the equivalent of running `uvicorn form_catch.main:app --reload` from
 inside the Poetry shell
