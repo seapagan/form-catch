@@ -146,9 +146,15 @@ more information on how to use (for example how to revert migrations).
 
 ## Run the API
 
-```terminal
-uvicorn form_catch.main:app --reload
-```
+Run `poe serve` or `poetry poe serve` (the latter works outside the Poetry
+shell)
+
+This is the equivalent of running `uvicorn form_catch.main:app --reload` from
+inside the Poetry shell
+
+**Important** - this is only useful during development mode! For a production
+server, use one of the secure methods noted in the [FastAPI
+Documentation](https://fastapi.tiangolo.com/deployment/)
 
 ## Usage
 
