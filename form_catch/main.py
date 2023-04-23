@@ -13,6 +13,7 @@ app = FastAPI(
     title="Form Catcher",
     description="This is a simple API to catch form data",
     version="0.1.0",
+    swagger_ui_parameters={"defaultModelsExpandDepth": -1},
 )
 app.state.database = database
 
