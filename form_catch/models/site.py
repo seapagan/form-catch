@@ -1,23 +1,14 @@
 """Setup the Site model."""
-import ormar
+from sqlalchemy import Column, Integer, String, Table
 
-from form_catch.database.db import database, metadata
+from form_catch.database.db import metadata
 
-
-class Site(ormar.Model):
-    """Site model definition."""
-
-    class Meta:
-        """Define the table name and database to use."""
-
-        tablename = "sites"
-        metadata = metadata
-        database = database
-
-    id: int = ormar.Integer(primary_key=True)  # type: ignore
-    name: str = ormar.String(max_length=100)  # type: ignore
-    slug: str = ormar.String(max_length=20, unique=True)  # type: ignore
-    email: str = ormar.String(max_length=100)  # type: ignore
-    redirect_url: str = ormar.String(
-        max_length=100, nullable=True, default=None
-    )  # type: ignore
+Site = Table(
+    "sites",
+    metadata,
+    Column("id", Integer, primary_key=True),
+    Column("name", String(100)),
+    Column("slug", String(20), unique=True),
+    Column("email", String(100)),
+    Column("redirect_url", String(100), nullable=True, default=None),
+)
