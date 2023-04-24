@@ -1,14 +1,17 @@
 """Handle site related routes."""
 from email_validator import EmailNotValidError, validate_email
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 
+from form_catch.auth import oauth2_scheme
 from form_catch.config.settings import get_settings
 from form_catch.database.db import database
 from form_catch.helpers.slug import create_slug, get_site_by_slug
 from form_catch.models.site import Site
 from form_catch.schemas.site import SiteList, SiteRequest, SiteResponse
 
-router = APIRouter(prefix="/site", tags=["Site"])
+router = APIRouter(
+    prefix="/site", tags=["Site"], dependencies=[Depends(oauth2_scheme)]
+)
 
 
 @router.post(
