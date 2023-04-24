@@ -1,3 +1,4 @@
+"""Alembic environment configuration."""
 from logging.config import fileConfig
 
 from alembic import context
@@ -5,7 +6,7 @@ from decouple import config as cfg
 from sqlalchemy import engine_from_config, pool
 
 from form_catch.database.db import metadata
-from form_catch.models import site
+from form_catch.models import site  # noqa F401
 
 DATABASE_URL = (
     f"postgresql://{cfg('DB_USER')}:{cfg('DB_PASSWORD')}@"

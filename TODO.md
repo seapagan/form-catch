@@ -12,7 +12,7 @@
   'lockdown'`]
 - [x] add test for empty form data, don't send email if so.
 - [ ] version the API endpoints for future-proofing.
-- [x] add an 'echo' form_id that will simply echo the results back to you (for
+- [x] add an 'echo' endpoint that will simply echo the results back to you (for
   testing)
 - [ ] implement spam protection. Can use `Botpoison`, `reCAPTCHA`, `Akismet` etc
 - [ ] optionally send the submitted data back to the redirect URL so it can be
