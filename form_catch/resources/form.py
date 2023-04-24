@@ -7,6 +7,8 @@ from pydantic import EmailStr
 
 from form_catch.helpers.slug import get_site_by_slug
 
+# from form_catch.schemas.form import EchoResponse
+
 router = APIRouter(prefix="/form", tags=["Form Handling"])
 
 
@@ -38,8 +40,8 @@ async def get_form_data(request: Request):
     return form_data
 
 
-@router.get("/echo")
-@router.post("/echo")
+@router.get("/echo", response_model=dict[str, str])
+@router.post("/echo", response_model=dict[str, str])
 async def echo_form(request: Request):
     """Echo the form data back to the user.
 
@@ -83,17 +85,17 @@ async def respond_to_form(
 
     # Send the email
     message = MessageSchema(
-        subject=f"Form submission for site '{site.name}'",
-        recipients=[EmailStr(site.email)],
-        template_body={"name": site.name, "form_data": dict(form_data)},
+        subject=f"Form submission for site '{site['name']}'",
+        recipients=[EmailStr(site["email"])],
+        template_body={"name": site["name"], "form_data": dict(form_data)},
         subtype=MessageType.html,
     )
     fm = FastMail(request.app.state.email_connection)
     backgroundtasks.add_task(send_mail_task, fm, message)
 
     # redirect to the site's redirect URL if it is specified
-    if site.redirect_url:
-        print("redirecting to", site.redirect_url)
+    if site["redirect_url"]:
+        print("redirecting to", site["redirect_url"])
         return RedirectResponse(
-            url=site.redirect_url, status_code=status.HTTP_303_SEE_OTHER
+            url=site["redirect_url"], status_code=status.HTTP_303_SEE_OTHER
         )
