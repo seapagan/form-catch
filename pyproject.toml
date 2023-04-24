@@ -9,13 +9,16 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = "^0.95.1"
-ormar = { extras = ["postgresql"], version = "^0.12.1" }
 uvicorn = { extras = ["standard"], version = "^0.21.1" }
 alembic = "^1.10.3"
 python-decouple = "^3.8"
 python-multipart = "^0.0.6"
 fastapi-mail = { extras = ["httpx"], version = "^1.2.7" }
 email-validator = "1.3.1"
+sqlalchemy = "1.4.47"
+databases = "^0.7.0"
+asyncpg = "^0.27.0"
+psycopg2 = "^2.9.6"
 
 
 [tool.poetry.group.dev.dependencies]
