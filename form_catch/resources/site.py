@@ -10,8 +10,6 @@ from form_catch.schemas.site import SiteList, SiteRequest, SiteResponse
 
 router = APIRouter(prefix="/site", tags=["Site"])
 
-# RequestSite = Site.get_pydantic(exclude={"id", "slug"})
-
 
 @router.post(
     "/", response_model=SiteResponse, status_code=status.HTTP_201_CREATED

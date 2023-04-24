@@ -7,8 +7,6 @@ from pydantic import EmailStr
 
 from form_catch.helpers.slug import get_site_by_slug
 
-# from form_catch.schemas.form import EchoResponse
-
 router = APIRouter(prefix="/form", tags=["Form Handling"])
 
 
