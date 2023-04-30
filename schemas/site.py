@@ -18,6 +18,7 @@ class SiteResponse(BaseModel):
     name: str
     slug: str
     action: str
+    redirect_url: str
 
 
 class SiteList(SiteRequest):
