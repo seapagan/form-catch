@@ -2,8 +2,8 @@
 import secrets
 import string
 
-from form_catch.database.db import database
-from form_catch.models.site import Site
+from database.db import database
+from models.site import Site
 
 
 def create_slug(length: int = 8) -> str:

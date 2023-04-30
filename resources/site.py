@@ -2,11 +2,11 @@
 from email_validator import EmailNotValidError, validate_email
 from fastapi import APIRouter, HTTPException, status
 
-from form_catch.config.settings import get_settings
-from form_catch.database.db import database
-from form_catch.helpers.slug import create_slug, get_site_by_slug
-from form_catch.models.site import Site
-from form_catch.schemas.site import SiteList, SiteRequest, SiteResponse
+from config.settings import get_settings
+from database.db import database
+from helpers.slug import create_slug, get_site_by_slug
+from models.site import Site
+from schemas.site import SiteList, SiteRequest, SiteResponse
 
 router = APIRouter(prefix="/site", tags=["Site"])
 

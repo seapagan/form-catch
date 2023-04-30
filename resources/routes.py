@@ -5,8 +5,8 @@ imported by main.
 """
 from fastapi import APIRouter
 
-from form_catch.config.settings import get_settings
-from form_catch.resources import form, home, site
+from config.settings import get_settings
+from resources import auth, form, home, site, user
 
 router = APIRouter()
 
@@ -18,3 +18,5 @@ router.include_router(form.router)
 # we can also remove routes from the other routers if we want to.
 if not get_settings().lockdown:
     router.include_router(site.router)
+    router.include_router(auth.router)
+    router.include_router(user.router)

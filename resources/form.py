@@ -5,7 +5,7 @@ from fastapi_mail import FastMail, MessageSchema, MessageType
 from fastapi_mail.errors import ConnectionErrors
 from pydantic import EmailStr
 
-from form_catch.helpers.slug import get_site_by_slug
+from helpers.slug import get_site_by_slug
 
 router = APIRouter(prefix="/form", tags=["Form Handling"])
 

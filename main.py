@@ -5,9 +5,9 @@ from fastapi import FastAPI
 from fastapi_mail import ConnectionConfig
 from pydantic import EmailStr
 
-from form_catch.config.settings import get_settings
-from form_catch.database.db import database
-from form_catch.resources import routes
+from config.settings import get_settings
+from database.db import database
+from resources import routes
 
 app = FastAPI(
     title="Form Catcher",

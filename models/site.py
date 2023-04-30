@@ -1,7 +1,7 @@
 """Setup the Site model."""
 from sqlalchemy import Column, Integer, String, Table
 
-from form_catch.database.db import metadata
+from database.db import metadata
 
 Site = Table(
     "sites",

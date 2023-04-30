@@ -2,7 +2,7 @@
 import databases
 import sqlalchemy
 
-from form_catch.config.settings import get_settings
+from config.settings import get_settings
 
 DATABASE_URL = (
     f"postgresql://{get_settings().db_user}:{get_settings().db_password}@"
