@@ -1,4 +1,3 @@
-
 """This file contains Custom Metadata for your API Project.
 
 Be aware, this will be re-generated any time you run the
@@ -19,5 +18,5 @@ custom_metadata = MetadataBase(
         "url": "https://www.gnramsay.com",
     },
     email="seapagan@gmail.com",
-    year="2023"
+    year="2023",
 )

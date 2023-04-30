@@ -1,10 +1,11 @@
 """Routes for the home screen and templates."""
 from typing import Union
 
-from config.helpers import get_api_version
-from config.settings import get_settings
 from fastapi import APIRouter, Header, Request
 from fastapi.templating import Jinja2Templates
+
+from config.helpers import get_api_version
+from config.settings import get_settings
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
