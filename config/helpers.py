@@ -17,8 +17,7 @@ def get_toml_path():
 def get_config_path():
     """Return the full path of the custom config file."""
     script_dir = Path(os.path.dirname(os.path.realpath(sys.argv[0])))
-    metadata_path = script_dir / "form_catch" / "config" / "metadata.py"
-    print(metadata_path)
+    metadata_path = script_dir / "config" / "metadata.py"
     return metadata_path
 
 
