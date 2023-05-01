@@ -65,6 +65,9 @@ docstring-convention = "google"
 [tool.bandit]
 exclude_dirs = ["config/settings.py", "schemas/examples.py"]
 
+[tool.bandit.assert_used]
+skips = ['*_test.py', '*/test_*.py']
+
 [tool.pydocstyle]
 add-ignore = ["D104"]
 
