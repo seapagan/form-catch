@@ -2,9 +2,7 @@
 name = "Form Catcher"
 version = "0.1.0"
 description = "Capture Form data from your static websites"
-authors = [
-    "Grant Ramsay (seapagan) <seapagan@gmail.com>",
-]
+authors = ["Grant Ramsay (seapagan) <seapagan@gmail.com>"]
 readme = "README.md"
 license = "MIT"
 
@@ -26,24 +24,15 @@ asyncclick = "^8.1.3.4"
 anyio = "^3.6.2"
 tomli = "^2.0.1"
 tomli-w = "^1.0.0"
+typer = { version = "^0.8", extras = ["all"] }
 
 [tool.poetry.dependencies.uvicorn]
-extras = [
-    "standard",
-]
+extras = ["standard"]
 version = "^0.22.0"
 
 [tool.poetry.dependencies.fastapi-mail]
-extras = [
-    "httpx",
-]
+extras = ["httpx"]
 version = "^1.2.8"
-
-[tool.poetry.dependencies.typer]
-extras = [
-    "all",
-]
-version = "^0.7.0"
 
 [tool.poetry.group.dev.dependencies]
 pydocstyle = "^6.3.0"
@@ -62,27 +51,16 @@ flake8-pyproject = "^1.2.3"
 serve = "uvicorn main:app --reload"
 
 [tool.flake8]
-exclude = [
-    "__init__.py",
-    ".git",
-    "migrations/versions/*",
-]
+exclude = ["__init__.py", ".git", "migrations/versions/*"]
 max-line-length = 80
 docstring-convention = "google"
 
 [tool.bandit]
-exclude_dirs = [
-    "config/settings.py",
-    "schemas/examples.py",
-]
+exclude_dirs = ["config/settings.py", "schemas/examples.py"]
 
 [tool.pydocstyle]
-add-ignore = [
-    "D104",
-]
+add-ignore = ["D104"]
 
 [build-system]
-requires = [
-    "poetry-core",
-]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
