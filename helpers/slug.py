@@ -2,7 +2,6 @@
 import secrets
 import string
 
-from database.db import database
 from models.site import Site
 
 
@@ -16,6 +15,6 @@ def create_slug(length: int = 8) -> str:
     )
 
 
-async def get_site_by_slug(slug: str):
+async def get_site_by_slug(slug: str, database):
     """Get a site by its slug."""
     return await database.fetch_one(Site.select().where(Site.c.slug == slug))

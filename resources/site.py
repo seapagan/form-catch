@@ -3,7 +3,7 @@ from email_validator import EmailNotValidError, validate_email
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 
 from config.settings import get_settings
-from database.db import database
+from database.db import get_database
 from helpers.slug import create_slug, get_site_by_slug
 from managers.auth import oauth2_schema
 from models.enums import RoleType
@@ -18,7 +18,9 @@ router = APIRouter(
 @router.post(
     "/", response_model=SiteResponse, status_code=status.HTTP_201_CREATED
 )
-async def create_site(site_data: SiteRequest, request: Request):
+async def create_site(
+    site_data: SiteRequest, request: Request, db=Depends(get_database)
+):
     """Create a new site."""
     slug = create_slug()
     while await get_site_by_slug(slug):
@@ -31,7 +33,7 @@ async def create_site(site_data: SiteRequest, request: Request):
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
         )
 
-    await database.execute(
+    await db.execute(
         Site.insert().values(
             **site_data.dict(), slug=slug, user_id=request.state.user.id
         )
@@ -70,18 +72,18 @@ async def get_site(slug: str, request: Request):
 
 
 @router.get("/", response_model=list[SiteList])
-async def get_sites(request: Request):
+async def get_sites(request: Request, db=Depends(get_database)):
     """Get all sites."""
     if request.state.user["role"] == RoleType.admin:
-        return await database.fetch_all(Site.select())
+        return await db.fetch_all(Site.select())
     else:
-        return await database.fetch_all(
+        return await db.fetch_all(
             Site.select().where(Site.c.user_id == request.state.user.id)
         )
 
 
 @router.delete("/{slug}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_site(slug: str, request: Request):  # type: ignore
+async def delete_site(slug: str, request: Request, db=Depends(get_database)):
     """Delete a site by its slug."""
     site = await get_site_by_slug(slug)
     if not site:
@@ -98,4 +100,4 @@ async def delete_site(slug: str, request: Request):  # type: ignore
             detail="You are not authorized to delete this site",
         )
 
-    await database.execute(Site.delete().where(Site.c.slug == slug))
+    await db.execute(Site.delete().where(Site.c.slug == slug))

@@ -8,7 +8,6 @@ from fastapi import BackgroundTasks, HTTPException, status
 from passlib.context import CryptContext
 
 from config.settings import get_settings
-from database.db import database
 from models.enums import RoleType
 from models.user import User
 from schemas.email import EmailTemplateSchema
@@ -35,7 +34,9 @@ class UserManager:
 
     @staticmethod
     async def register(
-        user_data, background_tasks: Union[BackgroundTasks, None] = None
+        user_data,
+        database,
+        background_tasks: Union[BackgroundTasks, None] = None,
     ):
         """Register a new user."""
         user_data["password"] = pwd_context.hash(user_data["password"])
@@ -96,7 +97,7 @@ class UserManager:
         return token, refresh
 
     @staticmethod
-    async def login(user_data):
+    async def login(user_data, database):
         """Log in an existing User."""
         user_do = await database.fetch_one(
             User.select().where(User.c.email == user_data["email"])
@@ -120,7 +121,7 @@ class UserManager:
         return token, refresh
 
     @staticmethod
-    async def delete_user(user_id):
+    async def delete_user(user_id, database):
         """Delete the User with specified ID."""
         check_user = await database.fetch_one(
             User.select().where(User.c.id == user_id)
@@ -132,7 +133,7 @@ class UserManager:
         await database.execute(User.delete().where(User.c.id == user_id))
 
     @staticmethod
-    async def update_user(user_id: int, user_data):
+    async def update_user(user_id: int, user_data, database):
         """Update the User with specified ID."""
         check_user = await database.fetch_one(
             User.select().where(User.c.id == user_id)
@@ -153,7 +154,7 @@ class UserManager:
         )
 
     @staticmethod
-    async def change_password(user_id: int, user_data):
+    async def change_password(user_id: int, user_data, database):
         """Change the specified user's Password."""
         check_user = await database.fetch_one(
             User.select().where(User.c.id == user_id)
@@ -169,7 +170,7 @@ class UserManager:
         )
 
     @staticmethod
-    async def set_ban_status(user_id: int, state: bool, my_id: int):
+    async def set_ban_status(user_id: int, state: bool, my_id: int, database):
         """Ban or un-ban the specified user based on supplied status."""
         if my_id == user_id:
             raise HTTPException(
@@ -181,26 +182,26 @@ class UserManager:
 
     # --------------------------- helper functions --------------------------- #
     @staticmethod
-    async def get_all_users():
+    async def get_all_users(database):
         """Return all Users in the database."""
         return await database.fetch_all(User.select())
 
     @staticmethod
-    async def get_user_by_email(email):
+    async def get_user_by_email(email, database):
         """Return a specific user by their email address."""
         return await database.fetch_one(
             User.select().where(User.c.email == email)
         )
 
     @staticmethod
-    async def get_user_by_id(user_id):
+    async def get_user_by_id(user_id, database):
         """Return a specific user by their email address."""
         return await database.fetch_one(
             User.select().where(User.c.id == user_id)
         )
 
     @staticmethod
-    async def change_role(role: RoleType, user_id):
+    async def change_role(role: RoleType, user_id, database):
         """Change the specified user's Role."""
         await database.execute(
             User.update().where(User.c.id == user_id).values(role=role)
