@@ -7,7 +7,7 @@ readme = "README.md"
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 fastapi = "^0.95.1"
 alembic = "^1.10.4"
 python-decouple = "^3.8"
@@ -34,6 +34,10 @@ version = "^0.22.0"
 extras = ["httpx"]
 version = "^1.2.8"
 
+[tool.poetry.dependencies.passlib]
+extras = ["bcrypt"]
+version = "^1.7.4"
+
 [tool.poetry.group.dev.dependencies]
 pydocstyle = "^6.3.0"
 flake8-docstrings = "^1.7.0"
@@ -46,6 +50,13 @@ bandit = "^1.7.5"
 poethepoet = "^0.19.0"
 pre-commit = "^3.2.2"
 flake8-pyproject = "^1.2.3"
+pytest = "^7.3.1"
+httpx = "0.23.3"
+pytest-cov = "^4.0.0"
+pytest-xdist = "^3.2.1"
+pytest-sugar = "^0.9.7"
+pytest-randomly = "^3.12.0"
+pytest-reverse = "^1.5.0"
 
 [tool.poe.tasks]
 serve = "uvicorn main:app --reload"
@@ -58,8 +69,14 @@ docstring-convention = "google"
 [tool.bandit]
 exclude_dirs = ["config/settings.py", "schemas/examples.py"]
 
+[tool.bandit.assert_used]
+skips = ['*_test.py', '*/test_*.py']
+
 [tool.pydocstyle]
 add-ignore = ["D104"]
+
+[tool.pytest.ini_options]
+filterwarnings = ["ignore:'crypt' is deprecated:DeprecationWarning"]
 
 [build-system]
 requires = ["poetry-core"]
