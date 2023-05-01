@@ -1,0 +1,20 @@
+{#
+  Template : 'submission.html'
+  Purpose  : This email is sent on a form submission.
+
+  This is a very basic template, with no attempt at styling. Note that for HTML
+  email, all styles must be INLINE.
+#}
+
+<h1>Form Submission for '{{name}}'</h1>
+<p>You have had a new Form Submission!</p>
+
+<ul style="list-style-type:none;">
+  {% for key,value in form_data.items() %}
+    <li><strong>{{key}}</strong>: {{value}}</li>
+  {% endfor %}
+</ul>
+
+<footer style="font-size:0.8em;font-style:italic;">
+  Form submission API by <a href="https://github.com/seapagan/form-catch">Seapagan</a>
+</footer>
