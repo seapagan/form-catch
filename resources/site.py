@@ -6,6 +6,7 @@ from config.settings import get_settings
 from database.db import database
 from helpers.slug import create_slug, get_site_by_slug
 from managers.auth import oauth2_schema
+from models.enums import RoleType
 from models.site import Site
 from schemas.site import SiteList, SiteRequest, SiteResponse
 
@@ -53,7 +54,7 @@ async def get_site(slug: str, request: Request):
         )
     if (
         site["user_id"] != request.state.user.id
-        and not request.state.user.is_admin
+        and request.state.user["role"] != RoleType.admin
     ):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -71,7 +72,7 @@ async def get_site(slug: str, request: Request):
 @router.get("/", response_model=list[SiteList])
 async def get_sites(request: Request):
     """Get all sites."""
-    if request.state.user.is_admin:
+    if request.state.user["role"] == RoleType.admin:
         return await database.fetch_all(Site.select())
     else:
         return await database.fetch_all(
@@ -90,7 +91,7 @@ async def delete_site(slug: str, request: Request):  # type: ignore
 
     if (
         site["user_id"] != request.state.user.id
-        and not request.state.user.is_admin
+        and request.state.user["role"] != RoleType.admin
     ):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
