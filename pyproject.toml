@@ -47,6 +47,12 @@ poethepoet = "^0.19.0"
 pre-commit = "^3.2.2"
 flake8-pyproject = "^1.2.3"
 pytest = "^7.3.1"
+httpx = "0.23.3"
+pytest-cov = "^4.0.0"
+pytest-xdist = "^3.2.1"
+pytest-sugar = "^0.9.7"
+pytest-randomly = "^3.12.0"
+pytest-reverse = "^1.5.0"
 
 [tool.poe.tasks]
 serve = "uvicorn main:app --reload"
@@ -61,6 +67,9 @@ exclude_dirs = ["config/settings.py", "schemas/examples.py"]
 
 [tool.pydocstyle]
 add-ignore = ["D104"]
+
+[tool.pytest.ini_options]
+filterwarnings = ["ignore:'crypt' is deprecated:DeprecationWarning"]
 
 [build-system]
 requires = ["poetry-core"]
