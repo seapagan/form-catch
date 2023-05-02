@@ -12,3 +12,11 @@ DATABASE_URL = (
 
 database = databases.Database(DATABASE_URL)
 metadata = sqlalchemy.MetaData()
+
+
+def get_database():
+    """Return the database connection.
+
+    Use a return for now but will most likely change to a yield.
+    """
+    return database

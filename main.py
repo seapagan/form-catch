@@ -6,7 +6,7 @@ from fastapi_mail import ConnectionConfig
 from pydantic import EmailStr
 
 from config.settings import get_settings
-from database.db import database
+from database.db import get_database
 from resources import routes
 
 app = FastAPI(
@@ -15,7 +15,7 @@ app = FastAPI(
     version="0.1.0",
     swagger_ui_parameters={"defaultModelsExpandDepth": -1},
 )
-app.state.database = database
+app.state.database = get_database()
 
 
 # set up email connection

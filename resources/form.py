@@ -1,10 +1,18 @@
 """Routes for handling form data."""
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Request, status
+from fastapi import (
+    APIRouter,
+    BackgroundTasks,
+    Depends,
+    HTTPException,
+    Request,
+    status,
+)
 from fastapi.responses import RedirectResponse
 from fastapi_mail import FastMail, MessageSchema, MessageType
 from fastapi_mail.errors import ConnectionErrors
 from pydantic import EmailStr
 
+from database.db import get_database
 from helpers.slug import get_site_by_slug
 
 router = APIRouter(prefix="/form", tags=["Form Handling"])
@@ -56,7 +64,10 @@ async def echo_form(request: Request):
 @router.get("/{slug}", status_code=status.HTTP_204_NO_CONTENT)
 @router.post("/{slug}", status_code=status.HTTP_204_NO_CONTENT)
 async def respond_to_form(
-    slug: str, request: Request, backgroundtasks: BackgroundTasks
+    slug: str,
+    request: Request,
+    backgroundtasks: BackgroundTasks,
+    db=Depends(get_database),
 ):
     """Get the supplied form data and email it.
 
@@ -65,7 +76,7 @@ async def respond_to_form(
 
     Also, this route responds to both GET and POST requests.
     """
-    site = await get_site_by_slug(slug)
+    site = await get_site_by_slug(slug, db)
     if not site:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Site not found."
