@@ -15,6 +15,7 @@ the main purpose of the API (catching form data) is fully functional.
 - [Development](#development)
   - [Set up a Virtual Environment](#set-up-a-virtual-environment)
   - [Install required Dependencies](#install-required-dependencies)
+    - [Using 'requirements.txt'](#using-requirementstxt)
   - [Install Git Pre-Commit hooks](#install-git-pre-commit-hooks)
   - [Migrate the Database](#migrate-the-database)
   - [Add a user](#add-a-user)
@@ -167,6 +168,20 @@ You now need to activate the VirtualEnv:
 $ poetry shell
 ```
 
+#### Using 'requirements.txt'
+
+If you cannot use `poetry` for any reason, there is an auto-generated
+`requirements.txt` in the root of the repository. Set up a virtual environment
+however you choose and then install the dependencies as usual using `pip`:
+
+```console
+$ pip install -r requirements.txt
+```
+
+This **DOES NOT INSTALL DEVELOPMENT DEPENDENCIES!** It is provided to simplify
+**deployment** if you cant install Poetry for some reason. For development,
+please install and use [Poetry](https://python-poetry.org/)
+
 ### Install Git Pre-Commit hooks
 
 This stage is **optional but recommended** (however it is compulsory if you are
@@ -178,7 +193,32 @@ pre-commit installed at .git/hooks/pre-commit
 ```
 
 This will ensure that all code meets the required linting standard before being
-committed.
+committed by running before any Git Commit. As a last step, it will also
+regenerate the `requirements.txt` if needed for systems without Poetry.
+
+You can run this manually with the following:
+
+```console
+$ pre-commit run --all-files
+```
+
+For ease of use, this command is aliased to `poe pre`:
+
+```console
+$ poe pre
+Poe => pre-commit run --all-files
+check yaml...............................................................Passed
+fix end of files.........................................................Passed
+trim trailing whitespace.................................................Passed
+black....................................................................Passed
+flake8...................................................................Passed
+isort....................................................................Passed
+PyMarkdown...............................................................Passed
+pydocstyle...............................................................Passed
+bandit...................................................................Passed
+poetry-check.............................................................Passed
+poetry-export............................................................Passed
+```
 
 ### Migrate the Database
 
@@ -306,7 +346,9 @@ If you need more control, you can run `uvicorn` directly :
 uvicorn main:app --reload
 ```
 
-The above command starts the server running on <http://localhost:8000>, and it
+The above uvicorn command is also aliased to `poe serve` for ease of use.
+
+This command starts the server running on <http://localhost:8000>, and it
 will automatically reload when it detects any changes as you develop.
 
 **Important** - this is only useful during development mode! For a production
