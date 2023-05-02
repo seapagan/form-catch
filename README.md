@@ -1,5 +1,10 @@
 # Form Catcher <!-- omit in toc -->
 
+[![CI](https://github.com/seapagan/form-catch/actions/workflows/CI.yml/badge.svg)](https://github.com/seapagan/form-catch/actions/workflows/CI.yml)
+[![CodeQL](https://github.com/seapagan/form-catch/actions/workflows/codeql.yml/badge.svg)](https://github.com/seapagan/form-catch/actions/workflows/codeql.yml)
+[![Dependency Review](https://github.com/seapagan/form-catch/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/seapagan/form-catch/actions/workflows/dependency-review.yml)
+[![ci status](https://results.pre-commit.ci/badge/github/seapagan/form-catch/main.svg)](https://results.pre-commit.ci/latest/github/seapagan/form-catch/main)
+
 A simple API to collect form submissions and send the contents to a specific
 Email address. Users can define a site with an email address and receive a
 unique slug in return. This slug will be used in the client Form `action` to get
