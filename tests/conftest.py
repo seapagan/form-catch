@@ -9,29 +9,29 @@ from main import app
 from models import site, user  # noqa F401
 
 DATABASE_URL = "sqlite:///./test.db"
-database = databases.Database(DATABASE_URL)
+test_database = databases.Database(DATABASE_URL)
 
 
 # Override the database connection to use the test database.
 async def get_database_override():
     """Return the database connection for testing."""
-    await database.connect()
-    yield database
+    await test_database.connect()
+    yield test_database
 
 
-def pytest_sessionstart(session):
-    """Create the test database."""
+@pytest.fixture(scope="function")
+def uses_db():
+    """Fixture to create the test database.
+
+    Once the particular test is done, the database is dropped ready for the next
+    test. This means that data from one test will not interfere with (or be
+    availible to) another.
+    """
     engine = sqlalchemy.create_engine(
         DATABASE_URL, connect_args={"check_same_thread": False}
     )
     metadata.create_all(engine)
-
-
-def pytest_sessionfinish(session):
-    """Drop the test database."""
-    engine = sqlalchemy.create_engine(
-        DATABASE_URL, connect_args={"check_same_thread": False}
-    )
+    yield
     metadata.drop_all(engine)
 
 
