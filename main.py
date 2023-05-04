@@ -6,7 +6,6 @@ from fastapi_mail import ConnectionConfig
 from pydantic import EmailStr
 
 from config.settings import get_settings
-from database.db import get_database
 from resources import routes
 
 app = FastAPI(
@@ -15,7 +14,6 @@ app = FastAPI(
     version="0.1.0",
     swagger_ui_parameters={"defaultModelsExpandDepth": -1},
 )
-app.state.database = get_database()
 
 
 # set up email connection
@@ -36,24 +34,6 @@ app.state.email_connection = email_connection
 
 
 app.include_router(routes.router)
-
-
-# ------ Init and close the database connection on startup and shutdown. ----- #
-@app.on_event("startup")
-async def startup() -> None:
-    """Connect to the database on startup."""
-    database_ = app.state.database
-    if not database_.is_connected:
-        await database_.connect()
-
-
-@app.on_event("shutdown")
-async def shutdown() -> None:
-    """Disconnect from the database on shutdown."""
-    database_ = app.state.database
-    if database_.is_connected:
-        await database_.disconnect()
-
 
 if __name__ == "__main__":
     import uvicorn
