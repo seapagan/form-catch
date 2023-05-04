@@ -4,7 +4,7 @@ import pytest
 import sqlalchemy
 from fastapi.testclient import TestClient
 
-from database.db import metadata
+from database.db import get_database, metadata
 from main import app
 from models import site, user  # noqa F401
 
@@ -17,6 +17,7 @@ async def get_database_override():
     """Return the database connection for testing."""
     await test_database.connect()
     yield test_database
+    await test_database.disconnect()
 
 
 @pytest.fixture(scope="function")
@@ -31,8 +32,10 @@ def uses_db():
         DATABASE_URL, connect_args={"check_same_thread": False}
     )
     metadata.create_all(engine)
+    app.dependency_overrides[get_database] = get_database_override
     yield
     metadata.drop_all(engine)
+    app.dependency_overrides = {}
 
 
 @pytest.fixture(scope="module")
