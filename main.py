@@ -2,6 +2,7 @@
 from pathlib import Path
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi_mail import ConnectionConfig
 from pydantic import EmailStr
 
@@ -34,6 +35,8 @@ app.state.email_connection = email_connection
 
 
 app.include_router(routes.router)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 if __name__ == "__main__":
     import uvicorn
