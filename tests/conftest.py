@@ -21,7 +21,7 @@ async def get_database_override():
 
 
 @pytest.fixture(scope="function")
-def uses_db():
+def db():
     """Fixture to create the test database.
 
     Once the particular test is done, the database is dropped ready for the next
@@ -33,7 +33,7 @@ def uses_db():
     )
     metadata.create_all(engine)
     app.dependency_overrides[get_database] = get_database_override
-    yield
+    yield test_database
     metadata.drop_all(engine)
     app.dependency_overrides = {}
 
