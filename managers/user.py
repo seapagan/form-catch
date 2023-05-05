@@ -27,6 +27,7 @@ class ErrorMessages:
     USER_INVALID = "This User does not exist"
     CANT_SELF_BAN = "You cannot ban/unban yourself!"
     NOT_VERIFIED = "You need to verify your Email before logging in"
+    EMPTY_FIELDS = "You must supply all fields and they cannot be empty"
 
 
 class UserManager:
@@ -39,6 +40,12 @@ class UserManager:
         background_tasks: Union[BackgroundTasks, None] = None,
     ):
         """Register a new user."""
+        # make sure relevant fields are not empty
+        if not all(user_data.values()):
+            raise HTTPException(
+                status.HTTP_400_BAD_REQUEST, ErrorMessages.EMPTY_FIELDS
+            )
+
         user_data["password"] = pwd_context.hash(user_data["password"])
         user_data["banned"] = False
 
@@ -52,6 +59,7 @@ class UserManager:
                 user_data["email"], check_deliverability=False
             )
             user_data["email"] = email_validation.email
+
             id_ = await database.execute(User.insert().values(**user_data))
         except UniqueViolationError as err:
             raise HTTPException(
