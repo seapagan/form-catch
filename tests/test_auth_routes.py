@@ -30,7 +30,9 @@ async def test_register_new_user(test_app, db, mocker):
     users_data = await db.fetch_one(User.select())
 
     assert response.status_code == 201
-    assert len(response.json()) == 2
+    assert list(response.json().keys()) == ["token", "refresh"]
+    assert type(response.json()["token"]) is str
+    assert type(response.json()["refresh"]) is str
 
     assert users_data["email"] == post_body["email"]
     assert users_data["first_name"] == post_body["first_name"]
