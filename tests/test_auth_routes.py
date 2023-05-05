@@ -5,9 +5,17 @@ from models.enums import RoleType
 from models.user import User
 
 
+def mock_template_send(self, backgroundtasks, email_data):
+    """Mock the template_send method."""
+    return None
+
+
 @pytest.mark.asyncio
-async def test_register_new_user(test_app, db):
+async def test_register_new_user(test_app, db, mocker):
     """Ensure a new user can register."""
+    # disable email sending
+    mocker.patch("managers.user.EmailManager.template_send", mock_template_send)
+
     post_body = {
         "email": "testuser@testing.com",
         "first_name": "Test",
@@ -33,8 +41,11 @@ async def test_register_new_user(test_app, db):
 
 
 @pytest.mark.asyncio
-async def test_register_new_user_bad_email(test_app, db):
-    """Ensure email is valid when registering."""
+async def test_register_new_user_bad_email(test_app, db, mocker):
+    """Ensure submitted email address is valid when registering."""
+    # disable email sending
+    mocker.patch("managers.user.EmailManager.template_send", mock_template_send)
+
     response = test_app.post(
         "/register",
         json={
