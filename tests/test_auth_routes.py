@@ -1,4 +1,6 @@
 """Test the authentication routes of the application."""
+from copy import deepcopy
+
 import pytest
 
 from managers.user import pwd_context
@@ -160,8 +162,9 @@ async def test_register_new_user_with_missing_data(
 @pytest.mark.asyncio
 async def test_cant_login_before_verifying_email(test_app, db):
     """Ensure a new user has to validate email before logging in."""
-    test_user["verified"] = False
-    _ = await db.execute(User.insert(), values=test_user)
+    my_user = deepcopy(test_user)
+    my_user["verified"] = False
+    _ = await db.execute(User.insert(), values=my_user)
 
     response = test_app.post(
         login_path,
