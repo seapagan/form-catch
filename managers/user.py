@@ -1,6 +1,6 @@
 """Define the User manager."""
 
-from typing import Union
+from typing import Optional
 
 from asyncpg import UniqueViolationError
 from email_validator import EmailNotValidError, validate_email
@@ -37,7 +37,7 @@ class UserManager:
     async def register(
         user_data,
         database,
-        background_tasks: Union[BackgroundTasks, None] = None,
+        background_tasks: Optional[BackgroundTasks] = None,
     ):
         """Register a new user."""
         # make sure relevant fields are not empty
@@ -154,10 +154,10 @@ class UserManager:
             User.update()
             .where(User.c.id == user_id)
             .values(
-                email=user_data.email,
-                first_name=user_data.first_name,
-                last_name=user_data.last_name,
-                password=pwd_context.hash(user_data.password),
+                email=user_data["email"],
+                first_name=user_data["first_name"],
+                last_name=user_data["last_name"],
+                password=pwd_context.hash(user_data["password"]),
             )
         )
 
@@ -174,7 +174,7 @@ class UserManager:
         await database.execute(
             User.update()
             .where(User.c.id == user_id)
-            .values(password=pwd_context.hash(user_data.password))
+            .values(password=pwd_context.hash(user_data["password"]))
         )
 
     @staticmethod
