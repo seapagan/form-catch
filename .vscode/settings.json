@@ -4,7 +4,8 @@
       "source.organizeImports": true
     },
     "editor.formatOnPaste": false,
-    "editor.formatOnSaveMode": "file"
+    "editor.formatOnSaveMode": "file",
+    "editor.defaultFormatter": "ms-python.black-formatter"
   },
   "editor.formatOnSave": true,
   "autoDocstring.startOnNewLine": true,
@@ -32,7 +33,7 @@
   "python.analysis.extraPaths": [],
   "python.analysis.stubPath": "/home/seapagan/stubs",
   "python.formatting.blackArgs": ["--line-length=80"],
-  "python.formatting.provider": "black",
+  "python.formatting.provider": "none",
   "python.languageServer": "Pylance",
   "python.linting.flake8Args": ["--max-line-length=80"],
   "python.linting.flake8Enabled": true,
