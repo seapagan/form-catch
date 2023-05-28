@@ -7,7 +7,7 @@ from pydantic import BaseModel, EmailStr
 class EmailSchema(BaseModel):
     """Define schema for email data."""
 
-    email: EmailStr
+    recipients: List[EmailStr]
     subject: str
     body: str
 

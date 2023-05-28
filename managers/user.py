@@ -1,6 +1,6 @@
 """Define the User manager."""
 
-from typing import Union
+from typing import Optional
 
 from asyncpg import UniqueViolationError
 from email_validator import EmailNotValidError, validate_email
@@ -27,6 +27,7 @@ class ErrorMessages:
     USER_INVALID = "This User does not exist"
     CANT_SELF_BAN = "You cannot ban/unban yourself!"
     NOT_VERIFIED = "You need to verify your Email before logging in"
+    EMPTY_FIELDS = "You must supply all fields and they cannot be empty"
 
 
 class UserManager:
@@ -36,9 +37,15 @@ class UserManager:
     async def register(
         user_data,
         database,
-        background_tasks: Union[BackgroundTasks, None] = None,
+        background_tasks: Optional[BackgroundTasks] = None,
     ):
         """Register a new user."""
+        # make sure relevant fields are not empty
+        if not all(user_data.values()):
+            raise HTTPException(
+                status.HTTP_400_BAD_REQUEST, ErrorMessages.EMPTY_FIELDS
+            )
+
         user_data["password"] = pwd_context.hash(user_data["password"])
         user_data["banned"] = False
 
@@ -52,6 +59,7 @@ class UserManager:
                 user_data["email"], check_deliverability=False
             )
             user_data["email"] = email_validation.email
+
             id_ = await database.execute(User.insert().values(**user_data))
         except UniqueViolationError as err:
             raise HTTPException(
@@ -146,10 +154,10 @@ class UserManager:
             User.update()
             .where(User.c.id == user_id)
             .values(
-                email=user_data.email,
-                first_name=user_data.first_name,
-                last_name=user_data.last_name,
-                password=pwd_context.hash(user_data.password),
+                email=user_data["email"],
+                first_name=user_data["first_name"],
+                last_name=user_data["last_name"],
+                password=pwd_context.hash(user_data["password"]),
             )
         )
 
@@ -166,7 +174,7 @@ class UserManager:
         await database.execute(
             User.update()
             .where(User.c.id == user_id)
-            .values(password=pwd_context.hash(user_data.password))
+            .values(password=pwd_context.hash(user_data["password"]))
         )
 
     @staticmethod

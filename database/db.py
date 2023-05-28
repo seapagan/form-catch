@@ -14,9 +14,8 @@ database = databases.Database(DATABASE_URL)
 metadata = sqlalchemy.MetaData()
 
 
-def get_database():
-    """Return the database connection.
-
-    Use a return for now but will most likely change to a yield.
-    """
-    return database
+async def get_database():
+    """Return the database connection."""
+    await database.connect()
+    yield database
+    await database.disconnect()
